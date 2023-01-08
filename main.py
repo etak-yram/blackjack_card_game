@@ -23,6 +23,7 @@ def play():
     dealer_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
     print('Dealers Hand: ||   ??   ||   ??   ||\n')
+    print(dealer_hand)
     dealer_hand.add_score()
     dealer_score += dealer_hand.score
 
@@ -33,6 +34,7 @@ def play():
     player_hand.add_card(deck.deal_card())
     print(player_hand)
     player_hand.add_score()
+    player_score += player_hand.score
     player_hand.show_score()
 
 
@@ -41,16 +43,9 @@ def play():
     blackjack_check(dealer_score)
     blackjack_check(player_score)
 
-    # decide next moves
 
-    if dealer_score > 21:
-        print('Dealer Bust, Player Wins!')
-    elif dealer_score >= 17:
-        print('Dealer Stands')
-    elif dealer_score < 17:
-        print('Dealer Hits!')
-        dealer_hand.add_card(deck.deal_card())
-        player_hand.add_score()
+
+    # decide next moves
 
     if player_score > 21:
         print('Player Bust, Dealer Wins!')
@@ -62,15 +57,17 @@ def play():
             player_hand.add_card(deck.deal_card())
             player_hand.add_score()
             player_hand.show_score()
+            player_score += player_hand.score
         if next_move == 'Stand':
             print('Player Stands!\n')
-            if dealer_score > player_score:
-                print('Dealer Wins!')
-                print('Dealer Score: {}'.format(dealer_score))
-            elif dealer_score == player_score:
-                print('Game is Drawn!')
-            else:
-                print('Player Wins!')
+
+        if dealer_score > player_score:
+            print('Dealer Wins!')
+            print('Dealer Score: {}'.format(dealer_score))
+        elif dealer_score == player_score:
+            print('Game is Drawn!')
+        else:
+            print('Player Wins!')
 
 
     print('')
