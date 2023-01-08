@@ -1,17 +1,12 @@
-from blackjack_classes import Deck, Hand, blackjack_check
-
+from blackjack_classes import Deck, Hand
 
 
 def play():
-
     # initiate scores
     dealer_score = 0
     player_score = 0
 
-
-
     print('////// Welcome to Blackjack! //////\n')
-
 
     # create and deck
     deck = Deck()
@@ -23,11 +18,11 @@ def play():
     dealer_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
     print('Dealers Hand: ||   ??   ||   ??   ||\n')
-    print(dealer_hand)
+
     dealer_hand.add_score()
     dealer_score += dealer_hand.score
 
-    # deal initial cards for player
+    # deal player cards
 
     player_hand = Hand('Your Hand: ')
     player_hand.add_card(deck.deal_card())
@@ -37,41 +32,34 @@ def play():
     player_score += player_hand.score
     player_hand.show_score()
 
-
-    # blackjack check
-
-    blackjack_check(dealer_score)
-    blackjack_check(player_score)
-
-
-
-    # decide next moves
+    # assess player score
 
     if player_score > 21:
-        print('Player Bust, Dealer Wins!')
-    elif player_score == 21:
+        print('Player is Bust!')
+
+    if player_score == 21:
         print('Blackjack, Player Wins!')
-    else:
+
+    while player_score <= 21:
         next_move = input('Stand or Hit?: ')
+
         if next_move == 'Hit':
             player_hand.add_card(deck.deal_card())
             player_hand.add_score()
-            player_hand.show_score()
-            player_score += player_hand.score
+            continue
         if next_move == 'Stand':
             print('Player Stands!\n')
+            break
 
-        if dealer_score > player_score:
-            print('Dealer Wins!')
-            print('Dealer Score: {}'.format(dealer_score))
-        elif dealer_score == player_score:
-            print('Game is Drawn!')
-        else:
-            print('Player Wins!')
 
+    if player_score > dealer_score:
+        print('Player Wins!')
+    else:
+        print('Dealer Wins!')
 
     print('')
     print('---------------------------')
+
 
 if __name__ == '__main__':
     play()

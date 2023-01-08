@@ -56,7 +56,5 @@ class Hand(Deck):
         print('Hand Score: {}'.format(self.score))
 
 
-def blackjack_check(score):
-    if score == 21:
-        print('Blackjack!')
+
 
