@@ -1,13 +1,13 @@
 import random
 
 
-class Card:  # a class to represent a card, with suit and value
-    def __init__(self, suit, value):
-        self.suit = suit
-        self.value = value
-
-    def view_card(self):  # a function to view a card
-        print('{} of {}'.format(self.value, self.suit))
+# class Card:  # a class to represent a card, with suit and value
+#     def __init__(self, suit, value):
+#         self.suit = suit
+#         self.value = value
+#
+#     def view_card(self):  # a function to view a card
+#         print('{} of {}'.format(self.value, self.suit))
 
 
 class Deck:
@@ -38,23 +38,25 @@ class Hand(Deck):
     def __str__(self):  # a function to view the hand
         return self.label + ' || ' + ' || '.join(self.deck) + ' || '
 
-
-
     def add_score(self):
         self.score = 0
         for card in self.deck:
             if card[0] == 'J' or card[0] == 'Q' or card[0] == 'K':
                 self.score += 10
             elif card[0] == 'A':
+                if 'Player' in self.label:
                     ace_val = input('Ace is 1 or 11?: ')
                     self.score += int(ace_val)
+                else:
+                    self.score += 11
             else:
-                self.score += int(card[0])
-
+                self.score += int(card[:2])
 
     def show_score(self):
-        print('Hand Score: {}'.format(self.score))
+        print('{} Hand: {} points'.format(self.label, self.score))
 
+    def show_dealer_hand(self):
+        print('Dealer Hand:   {}      ??   \n'.format(self.deck[0]))
 
 
 

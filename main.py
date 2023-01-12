@@ -2,63 +2,90 @@ from blackjack_classes import Deck, Hand
 
 
 def play():
-    # initiate scores
-    dealer_score = 0
-    player_score = 0
+    print('Welcome to Blackjack!\n')
 
-    print('////// Welcome to Blackjack! //////\n')
-
-    # create and deck
+    # set up and shuffle deck
     deck = Deck()
-    deck.shuffle_deck()
 
-    # deal initial cards for dealer
+    # deal dealers hand
+    dealer_hand = Hand('Dealers ')
+    for deal in range(2):
+        dealer_hand.add_card(deck.deal_card())
+        dealer_hand.add_score()
 
-    dealer_hand = Hand('Dealer Hand')
-    dealer_hand.add_card(deck.deal_card())
-    dealer_hand.add_card(deck.deal_card())
-    print('Dealers Hand: ||   ??   ||   ??   ||\n')
+    dealer_hand.show_dealer_hand()
 
-    dealer_hand.add_score()
-    dealer_score += dealer_hand.score
+    # deal players hand
+    player_hand = Hand('Players ')
+    for deal in range(2):
+        player_hand.add_card(deck.deal_card())
+        player_hand.add_score()
 
-    # deal player cards
-
-    player_hand = Hand('Your Hand: ')
-    player_hand.add_card(deck.deal_card())
-    player_hand.add_card(deck.deal_card())
-    print(player_hand)
-    player_hand.add_score()
-    player_score += player_hand.score
+    # output player hand
+    print(player_hand.deck)
     player_hand.show_score()
 
-    # assess player score
+    while dealer_hand.score < 21 and player_hand.score < 21:
 
-    if player_score > 21:
-        print('Player is Bust!')
+        if dealer_hand.score == 21 or player_hand.score == 21:
+            break
 
-    if player_score == 21:
-        print('Blackjack, Player Wins!')
+        if dealer_hand.score < 17:
+            print('\nDealer Hits!\n')
+            dealer_hand.add_card(deck.deal_card())
+            dealer_hand.add_score()
+            dealer_hand.show_score()
+            if dealer_hand.score > 21:
+                print('Dealer Bust!')
+                break
 
-    while player_score <= 21:
-        next_move = input('Stand or Hit?: ')
-
+        next_move = input('Player: Hit or Stand?')
         if next_move == 'Hit':
             player_hand.add_card(deck.deal_card())
             player_hand.add_score()
-            continue
-        if next_move == 'Stand':
-            print('Player Stands!\n')
+            print(player_hand.deck)
+            player_hand.show_score()
+            if player_hand.score > 21:
+                print('Player Bust!')
+                break
+        elif next_move == 'Stand':
+            print('Player Stands!')
             break
+        continue
 
+    print('\nChecking Scores...\n')
 
-    if player_score > dealer_score:
-        print('Player Wins!')
+    if (player_hand.score == 21) or (dealer_hand.score == 21):
+        if player_hand.score == 21:
+            print('Game ends - Player Has Blackjack!')
+            player_hand.show_score()
+            dealer_hand.show_score()
+        else:
+            print('Game ends - Dealer Has Blackjack!')
+            player_hand.show_score()
+            dealer_hand.show_score()
+    elif (player_hand.score > 21) or (dealer_hand.score > 21):
+        if player_hand.score > 21:
+            print('Game ends - Player Bust!')
+            player_hand.show_score()
+            dealer_hand.show_score()
+        else:
+            print('Game ends - Dealer Bust!')
+            player_hand.show_score()
+            dealer_hand.show_score()
     else:
-        print('Dealer Wins!')
-
-    print('')
-    print('---------------------------')
+        if dealer_hand.score < player_hand.score < 21:
+            print('Player Wins!')
+            player_hand.show_score()
+            dealer_hand.show_score()
+        elif player_hand.score < dealer_hand.score < 21:
+            print('Dealer Wins!')
+            dealer_hand.show_score()
+            player_hand.show_score()
+        else:
+            print('It looks like a draw...')
+            dealer_hand.show_score()
+            player_hand.show_score()
 
 
 if __name__ == '__main__':
