@@ -2,7 +2,6 @@ from blackjack_functions import *
 from blackjack_classes import Deck, Hand
 
 
-
 def play():
     print('Welcome to Blackjack!\n')
 
@@ -10,7 +9,7 @@ def play():
     deck = Deck()
 
     # deal dealers hand
-    dealer_hand = Hand('Dealers ')
+    dealer_hand = Hand('Dealer')
     for deal in range(2):
         dealer_hand.add_card(deck.deal_card())
         dealer_hand.add_score()
@@ -19,7 +18,7 @@ def play():
     dealer_hand.show_dealer_hand()
 
     # deal players hand
-    player_hand = Hand('Players ')
+    player_hand = Hand('Player')
     for deal in range(2):
         player_hand.add_card(deck.deal_card())
         player_hand.add_score()
@@ -27,7 +26,6 @@ def play():
     # output player hand
     print(player_hand.deck)
     player_hand.show_score()
-
 
     # implement the game loop to run whilst player and dealer scores are under 21
 
@@ -72,7 +70,6 @@ def play():
         # if no break conditions satisfied, loop around again
         continue
 
-
     # if loop is broken, message print to adv scores are being checked
     print('\nChecking Scores...\n')
 
@@ -82,7 +79,6 @@ def play():
     # show final scores
     player_hand.show_score()
     dealer_hand.show_score()
-
 
     play_again = input('\nWould you like to play again? Y/N: ')
     if play_again == 'Y':

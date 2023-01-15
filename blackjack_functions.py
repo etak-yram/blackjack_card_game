@@ -1,5 +1,4 @@
 
-
 # check for blackjack
 def blackjack_check(player_score, dealer_score):
     if player_score == 21 or dealer_score == 21:
@@ -26,4 +25,3 @@ def evaluate_final_scores(player_score, dealer_score):
             print('Dealer Wins!')
         else:
             print('It looks like a draw...')
-
